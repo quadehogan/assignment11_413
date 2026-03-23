@@ -50,25 +50,38 @@ function BooksPage() {
   };
 
   return (
-    <>
-      <Banner />
-      <SortButton sortOrder={sortOrder} onToggle={handleSortToggle} />
-
-      <CategoryFilter selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
-
+    <div className="container-fluid px-4">
       <CartSummary />
 
-      <BookGrid books={books} />
+      {/* Banner */}
+      <div className="row">
+        <div className="col-12">
+          <Banner />
+        </div>
+      </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        onPageChange={setCurrentPage}
-        onPageSizeChange={handlePageSizeChange}
-      />
+      {/* Toolbar */}
+      <div className="row mb-3">
+        <div className="col d-flex align-items-center justify-content-between">
+          <CategoryFilter selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
+          <SortButton sortOrder={sortOrder} onToggle={handleSortToggle} />
+        </div>
+      </div>
 
-    </>
+      {/* Book grid */}
+      <div className="row">
+        <div className="col-12">
+          <BookGrid books={books} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import Banner from "../components/Banner";
+import "./CartPage.css";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -10,25 +11,40 @@ function CartPage() {
 
   return (
     <>
-        <Banner />
-        <div>
-        <h2>Your Cart</h2>
+      <Banner />
+      <div className="cart-container">
+        <h2 className="cart-title">Your Cart</h2>
+
         {cart.length === 0 ? (
-            <p>Your cart is empty</p>
+          <p className="cart-empty">Your cart is empty</p>
         ) : (
-            <ul>
+          <ul className="cart-list">
             {cart.map((item) => (
-                <li key={item.bookId}>
-                {item.title} — ${item.bookCost.toFixed(2)} x {item.quantity}
-                <button onClick={() => removeFromCart(item.bookId)}>Remove</button>
-                </li>
+              <li key={item.bookId} className="cart-item">
+                <div className="cart-item-info">
+                  <span className="cart-item-title">{item.title}</span>
+                  <span className="cart-item-details">
+                    ${item.bookCost.toFixed(2)} &times; {item.quantity} = ${(item.bookCost * item.quantity).toFixed(2)}
+                  </span>
+                </div>
+                <button className="cart-remove-btn" onClick={() => removeFromCart(item.bookId)}>
+                  Remove
+                </button>
+              </li>
             ))}
-            </ul>
+          </ul>
         )}
-        <h3>Total: ${total.toFixed(2)}</h3>
-        <button>Checkout</button>
-        <button onClick={() => navigate(-1)}>Continue Browsing</button>
+
+        <div className="cart-footer">
+          <span className="cart-total">Total: ${total.toFixed(2)}</span>
+          <div className="cart-actions">
+            <button className="btn btn-outline-secondary" onClick={() => navigate(-1)}>
+              Continue Browsing
+            </button>
+            <button className="btn btn-primary">Checkout</button>
+          </div>
         </div>
+      </div>
     </>
   );
 }

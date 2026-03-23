@@ -1,5 +1,7 @@
+import { useState, useRef } from "react";
 import type { Book } from "../types/Book";
 import { useCart } from "../context/CartContext";
+import ToastNotification from "./ToastNotification";
 
 interface BookCardProps {
   book: Book;
@@ -7,9 +9,14 @@ interface BookCardProps {
 
 function BookCard({ book }: BookCardProps) {
   const { addToCart } = useCart();
+  const [showToast, setShowToast] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleAddToCart = () => {
     addToCart({ bookId: book.bookID, title: book.title, bookCost: book.price, quantity: 1 });
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setShowToast(true);
+    timerRef.current = setTimeout(() => setShowToast(false), 2000);
   };
 
   return (
@@ -33,6 +40,7 @@ function BookCard({ book }: BookCardProps) {
           </button>
         </div>
       </div>
+      <ToastNotification message={`"${book.title}" added to cart`} show={showToast} />
     </div>
   );
 }
