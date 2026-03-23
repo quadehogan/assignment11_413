@@ -4,6 +4,8 @@ import BookGrid from "../components/BookGrid";
 import Pagination from "../components/Pagination";
 import SortButton from "../components/SortButton";
 import CategoryFilter from "../components/CategoryFilter";
+import CartSummary from "../components/CartSummary";
+import Banner from "../components/Banner";
 
 function BooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -49,12 +51,12 @@ function BooksPage() {
 
   return (
     <>
-    
-      <h2 className="mb-3">Book List</h2>
-
+      <Banner />
       <SortButton sortOrder={sortOrder} onToggle={handleSortToggle} />
 
       <CategoryFilter selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
+
+      <CartSummary />
 
       <BookGrid books={books} />
 
