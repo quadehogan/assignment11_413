@@ -9,7 +9,7 @@ interface FetchCategoriesResponse {
   categories: string[];
 }
 
-const API_BASE_URL = "https://localhost:5000/api/Books";
+const API_BASE_URL = "https://libraryapp-axeebec3czcudeba.westus2-01.azurewebsites.net/api/Books";
 
 export const fetchBooks = async (
     pageSize: number,
