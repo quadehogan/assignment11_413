@@ -11,7 +11,8 @@ builder.Services.AddOpenApi();
 
 // Entity Framework Core with SQLite
 builder.Services.AddDbContext<LibraryDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("LibraryConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("LibraryConnection"))
+);
 
 // CORS — allow the React dev server
 builder.Services.AddCors(options =>
@@ -31,9 +32,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors("AllowReactApp");
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
