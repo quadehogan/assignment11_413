@@ -59,6 +59,58 @@ public class BooksController : ControllerBase
             .Distinct()
             .ToList();
 
-        return Ok(categories);
+        return Ok(new
+        {
+            categories
+        });
     }
+
+    [HttpPost("AddBook")]
+    public IActionResult AddBook([FromBody] Book book)
+    {
+        _context.Books.Add(book);
+        _context.SaveChanges();
+        
+        return Ok(book);
+    }
+
+    [HttpPut("UpdateBook/{id}")]
+    public IActionResult UpdateBook(int id, [FromBody] Book book)
+    {
+        var existingBook = _context.Books.Find(id);
+        if (existingBook == null)
+        {
+            return NotFound();
+        }
+
+        existingBook.Title = book.Title;
+        existingBook.Author = book.Author;
+        existingBook.Category = book.Category;
+        existingBook.Publisher = book.Publisher;
+        existingBook.ISBN = book.ISBN;
+        existingBook.Classification = book.Classification;
+        existingBook.PageCount = book.PageCount;
+        existingBook.Price = book.Price;
+
+        _context.Books.Update(existingBook);
+        _context.SaveChanges();
+
+        return Ok(existingBook);
+    }
+
+    [HttpDelete("DeleteBook/{id}")]
+    public IActionResult DeleteBook(int id)
+    {
+        var existingBook = _context.Books.Find(id);
+        if (existingBook == null)
+        {
+            return NotFound();
+        }
+
+        _context.Books.Remove(existingBook);
+        _context.SaveChanges();
+
+        return Ok();
+    } 
+
 }

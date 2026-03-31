@@ -5,9 +5,11 @@ import ToastNotification from "./ToastNotification";
 
 interface BookCardProps {
   book: Book;
+  onDelete: (bookID: number) => void;
+  onEdit: (book: Book) => void;
 }
 
-function BookCard({ book }: BookCardProps) {
+function BookCard({ book, onDelete, onEdit }: BookCardProps) {
   const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,10 +36,18 @@ function BookCard({ book }: BookCardProps) {
             <li><strong>Price:</strong> ${book.price.toFixed(2)}</li>
           </ul>
         </div>
-        <div className="card-footer">
+        <div className="card-footer d-flex flex-column gap-2">
           <button className="btn btn-primary w-100" onClick={handleAddToCart}>
             Add to Cart
           </button>
+          <div className="btn-group w-100">
+            <button className="btn btn-outline-warning" onClick={() => onEdit(book)}>
+              Edit
+            </button>
+            <button className="btn btn-outline-danger" onClick={() => onDelete(book.bookID)}>
+              Delete
+            </button>
+          </div>
         </div>
       </div>
       <ToastNotification message={`"${book.title}" added to cart`} show={showToast} />
